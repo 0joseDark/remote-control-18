@@ -4,31 +4,30 @@
 
 from flask import Flask, render_template, request, jsonify
 import RPi.GPIO as GPIO
-import time
 
 app = Flask(__name__)
 
 # Configuração dos pinos GPIO
 GPIO.setmode(GPIO.BCM)
 pins = {
-    'up': 17,
-    'down': 18,
-    'left': 27,
-    'right': 22,
-    'saltar': 23,
-    'baixar': 24,
-    'extra1': 5,
-    'extra2': 6,
-    'extra3': 13,
-    'extra4': 19,
-    'extra5': 26,
-    'extra6': 12,
-    'extra7': 16,
-    'extra8': 20,
-    'extra9': 21,
-    'extra10': 25,
-    'extra11': 8,
-    'extra12': 7
+    'up1': 17,
+    'down1': 18,
+    'left1': 27,
+    'right1': 22,
+    'up2': 23,
+    'down2': 24,
+    'left2': 5,
+    'right2': 6,
+    'up3': 13,
+    'down3': 19,
+    'left3': 26,
+    'right3': 12,
+    'extra1': 16,
+    'extra2': 20,
+    'extra3': 21,
+    'extra4': 25,
+    'extra5': 8,
+    'extra6': 7
 }
 
 for pin in pins.values():

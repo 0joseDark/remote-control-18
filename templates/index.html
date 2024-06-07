@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            width: 80%;
+        }
+        .button {
+            display: inline-block;
+            width: 100px;
+            height: 50px;
+            margin: 10px;
+            text-align: center;
+            line-height: 50px;
+            background-color: #ccc;
+            border: 1px solid #000;
+            cursor: pointer;
+            user-select: none;
+        }
+        .active {
+            background-color: #4CAF50;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Row 1 -->
+        <div class="button" onclick="sendCommand('up1')" id="up1">↑</div>
+        <div class="button" onclick="sendCommand('left1')" id="left1">←</div>
+        <div class="button" onclick="sendCommand('down1')" id="down1">↓</div>
+        <div class="button" onclick="sendCommand('right1')" id="right1">→</div>
+
+        <!-- Row 2 -->
+        <div class="button" onclick="sendCommand('up2')" id="up2">↑</div>
+        <div class="button" onclick="sendCommand('left2')" id="left2">←</div>
+        <div class="button" onclick="sendCommand('down2')" id="down2">↓</div>
+        <div class="button" onclick="sendCommand('right2')" id="right2">→</div>
+
+        <!-- Row 3 -->
+        <div class="button" onclick="sendCommand('up3')" id="up3">↑</div>
+        <div class="button" onclick="sendCommand('left3')" id="left3">←</div>
+        <div class="button" onclick="sendCommand('down3')" id="down3">↓</div>
+        <div class="button" onclick="sendCommand('right3')" id="right3">→</div>
+
+        <!-- Extra Buttons -->
+        <div class="button" onclick="sendCommand('extra1')" id="extra1">Extra 1</div>
+        <div class="button" onclick="sendCommand('extra2')" id="extra2">Extra 2</div>
+        <div class="button" onclick="sendCommand('extra3')" id="extra3">Extra 3</div>
+        <div class="button" onclick="sendCommand('extra4')" id="extra4">Extra 4</div>
+        <div class="button" onclick="sendCommand('extra5')" id="extra5">Extra 5</div>
+        <div class="button" onclick="sendCommand('extra6')" id="extra6">Extra 6</div>
+    </div>
+
+    <script>
+        function sendCommand(command) {
+            fetch('/control', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ command: command }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    const button = document.getElementById(command);
+                    if (data.state === 1) {
+                        button.classList.add('active');
+                    } else {
+                        button.classList.remove('active');
+                    }
+                    console.log(`Command ${command} executed successfully, new state: ${data.state}`);
+                } else {
+                    console.error(`Error: ${data.message}`);
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
